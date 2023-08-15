@@ -50,7 +50,7 @@ tbl_summary(
 ```{r}
 #| label: tbl-one
 #| tbl-cap: "Race/Ethnicicy, Eyesight, Glasses, and Age at Birth by Sex"
-tbl_summary(
+table1= (tbl_summary(
   nlsy,
   by = sex_cat,
   include = c(sex_cat, race_eth_cat,
@@ -67,12 +67,18 @@ tbl_summary(
   add_overall(col_label = "**Total**") |> 
   bold_labels() |> 
   modify_footnote(update = everything() ~ NA) |> 
-  modify_header(label = "**Variable**", p.value = "**P**")
+  modify_header(label = "**Variable**", p.value = "**P**"))
+
 stats<- list(glassesA= mean(nlsy$glasses, na.rm=TRUE), n=nrow(nlsy), sleeponweekend=mean(nlsy$sleep_wknd, na.rm=TRUE))
+
+glasses_f=inline_text(table1, variable="glasses", column="Female")
+glasses_m=inline_text(table1, variable="glasses", column="Male")
+
+table1
 ```
 
-The above table @tbl-one shows descriptive statistics outlining race/ethnicity, eyesight, glasses, and age at first birth stratified by sex. There were `r stats$n` participants with a mean of `r stats$glassesA` participants who wears glasses. Additionally, participants get an average of `r stats$sleeponweekend` hours of sleep on the weekend.
 
+The above table @tbl-one shows descriptive statistics outlining race/ethnicity, eyesight, glasses, and age at first birth stratified by sex. There were `r stats$n` participants with a mean of `r stats$glassesA` participants who wears glasses. Additionally, participants get an average of `r stats$sleeponweekend` hours of sleep on the weekend. A greater proportion of female (`r glasses_f`) than male (`r glasses_m`) wore glasses.
 
 # Univariate regression
 
